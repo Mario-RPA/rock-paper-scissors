@@ -2,12 +2,12 @@ function getComputerChoice() {
     return Math.floor(Math.random()*3);
 }
 
-function round() {
+function playRound(message = "Enter your choice 'rock', 'paper' or 'scissors'") {
     let choices = ["rock", "paper","scissors"];    
     let computerChoice = choices[getComputerChoice()];
-    let userChoice = prompt("Enter your choice 'rock', 'paper' or 'scissors'");
+    let userChoice = prompt(message);
     if (userChoice === null || userChoice === "" || (!choices.includes(userChoice.toLowerCase()))) {
-        round();
+        playRound("Error, either Canceled, empty or wrong selection, try again:");
     } else if (userChoice === computerChoice) {
         return "It's a tie!";
     } else if (userChoice === "scissors" && computerChoice === "rock") {
@@ -25,4 +25,24 @@ function round() {
     }
 }
 
-window.onload = round();
+function game(rounds = 5) {
+    let userScore = 0, computerScore = 0;
+    for (let i = 0; i < rounds; i++) {
+        if (playRound()) {
+            userScore++;
+            alert(`You won the round! User: ${userScore} Computer: ${computerScore}`);            
+        } else {
+            computerScore++;
+            alert(`You lost the round! User: ${userScore} Computer: ${computerScore}`);            
+        }
+    }
+    if (userScore === computerScore) {
+        alert("It's a tie!");
+    } else if (userScore > computerScore) {
+        alert("You won the match!");
+    } else {
+        alert("You lost the match!");
+    }
+}
+
+window.onload = game();
