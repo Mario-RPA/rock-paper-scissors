@@ -7,33 +7,34 @@ function playRound(message = "Enter your choice 'rock', 'paper' or 'scissors'") 
     let computerChoice = choices[getComputerChoice()];
     let userChoice = prompt(message);
     if (userChoice === null || userChoice === "" || (!choices.includes(userChoice.toLowerCase()))) {
-        playRound("Error, either Canceled, empty or wrong selection, try again:");
+        return playRound("Error: either canceled, empty or wrong selection, try again:");
     } else if (userChoice === computerChoice) {
-        return "It's a tie!";
+        return playRound("Tie! Try again!");
     } else if (userChoice === "scissors" && computerChoice === "rock") {
-        return false;
+        return [false, userChoice, computerChoice];
     } else if (userChoice === "scissors" && computerChoice === "paper") {
-        return true;
+        return [true, userChoice, computerChoice];
     } else if (userChoice === "paper" && computerChoice === "rock") {
-        return true;
+        return [true, userChoice, computerChoice];
     } else if (userChoice === "paper" && computerChoice === "scissors") {
-        return false;
+        return [false, userChoice, computerChoice];
     } else if (userChoice === "rock" && computerChoice === "paper") {
-        return false;
+        return [false, userChoice, computerChoice];
     } else if (userChoice === "rock" && computerChoice === "scissors") {
-        return true;
+        return [true, userChoice, computerChoice];
     }
 }
 
 function game(rounds = 5) {
     let userScore = 0, computerScore = 0;
     for (let i = 0; i < rounds; i++) {
-        if (playRound()) {
+        let roundResults = playRound();
+        if (roundResults[0]) {
             userScore++;
-            alert(`You won the round! User: ${userScore} Computer: ${computerScore}`);            
+            alert(`You won the round!\n\nUser ${userScore} - ${computerScore} Computer\n\nUser chose: ${roundResults[1]}\nComputer chose: ${roundResults[2]}`);            
         } else {
             computerScore++;
-            alert(`You lost the round! User: ${userScore} Computer: ${computerScore}`);            
+            alert(`You lost the round!\n\nUser ${userScore} - ${computerScore} Computer\n\nUser chose: ${roundResults[1]}\nComputer chose: ${roundResults[2]}`);
         }
     }
     if (userScore === computerScore) {
