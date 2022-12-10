@@ -9,11 +9,11 @@ function getComputerChoice() {
 }
 
 function choiceTranslator(choice) {
-    return choices[choice];
+    return choices[choice].charAt().toUpperCase() + choices[choice].slice(1);
 }
 
 function scoreboard(userChoice, computerChoice, userScore, computerScore) {
-    return `\n\nUser ${userScore} - ${computerScore} Computer\n\nUser chose: ${userChoice}\nComputer chose: ${computerChoice}`;
+    return `\n\nUser ${userScore} - ${computerScore} Computer\n\nUser chose: ${choiceTranslator(userChoice)}\nComputer chose: ${choiceTranslator(computerChoice)}`;
 }
 
 function playRound(message = "Enter your choice 'rock', 'paper' or 'scissors'") {
@@ -33,14 +33,12 @@ function game(rounds = 5) {
     let userScore = 0, computerScore = 0;
     for (let i = 0; i < rounds; i++) {
         let roundResults = playRound();
-        let userChoice = choiceTranslator(roundResults[1]);
-        let computerChoice = choiceTranslator(roundResults[2]);
         if (roundResults[0] === 1) {
             userScore++;
-            alert(`You won the round! ${scoreboard(userChoice, computerChoice, userScore, computerScore)}`);
+            alert(`You won the round! ${scoreboard(roundResults[1], roundResults[2], userScore, computerScore)}`);
         } else if (roundResults[0] === 2) {
             computerScore++;
-            alert(`You lost the round! ${scoreboard(userChoice, computerChoice, userScore, computerScore)}`);
+            alert(`You lost the round! ${scoreboard(roundResults[1], roundResults[2], userScore, computerScore)}`);
         }
     }
     if (userScore === computerScore) {
