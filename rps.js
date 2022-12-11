@@ -4,6 +4,34 @@ const matches = [
     [1, 0, 2],
     [2, 1, 0],
 ];
+let userScore = 0;
+let computerScore = 0;
+const resultMessage = document.querySelector(".result-message");
+const userScoreDOM = document.querySelector("h1.user-score")
+const userChoiceDOM = document.querySelector("h1.user-choice")
+const computerScoreDOM = document.querySelector("h1.computer-score")
+const computerChoiceDOM = document.querySelector("h1.computer-choice")
+
+function calculateRoundResults(results) {
+    if (results === 1) {
+        userScore++;
+        resultMessage.textContent = "You won this round!";
+        userScoreDOM.textContent = userScore;
+    } else if (results === 2) {
+        computerScore++;
+        resultMessage.textContent = "Oh no!";
+        computerScoreDOM.textContent = computerScore;
+    } else if (results === 0) {
+        resultMessage.textContent = "It's a tie! Try again!";
+    }
+}
+
+function displayChoices(userChoice, computerChoice) {
+    console.log(choiceTranslator(userChoice));
+    userChoiceDOM.textContent = choiceTranslator(userChoice);
+    computerChoiceDOM.textContent = choiceTranslator(computerChoice);
+}
+
 function getComputerChoice() {
     return Math.floor(Math.random()*3);
 }
@@ -12,42 +40,12 @@ function choiceTranslator(choice) {
     return choices[choice].charAt().toUpperCase() + choices[choice].slice(1);
 }
 
-function scoreboard(userChoice, computerChoice, userScore, computerScore) {
-    return `\n\nUser ${userScore} - ${computerScore} Computer\n\nUser chose: ${choiceTranslator(userChoice)}\nComputer chose: ${choiceTranslator(computerChoice)}`;
-}
-
-function playRound(message = "Enter your choice 'rock', 'paper' or 'scissors'") {
+function playRound(userChoice) {
     let computerChoice = getComputerChoice();
-    let userChoice = prompt(message);
-    if (userChoice === null || userChoice === "" || (!choices.includes(userChoice.toLowerCase()))) {
-        return playRound("Error: either canceled, empty or wrong selection, try again:");
-    } else if (choices.indexOf(userChoice) === computerChoice) {
-        return playRound("Tie! Try again!");
-    } else {
-        userChoice = choices.indexOf(userChoice);
-        return [matches[userChoice][computerChoice], userChoice, computerChoice];
-    }
+    userChoice = choices.indexOf(userChoice);
+    calculateRoundResults(matches[userChoice][computerChoice]);
+    displayChoices(userChoice, computerChoice)
 }
 
-function game(rounds = 5) {
-    let userScore = 0, computerScore = 0;
-    for (let i = 0; i < rounds; i++) {
-        let roundResults = playRound();
-        if (roundResults[0] === 1) {
-            userScore++;
-            alert(`You won the round! ${scoreboard(roundResults[1], roundResults[2], userScore, computerScore)}`);
-        } else if (roundResults[0] === 2) {
-            computerScore++;
-            alert(`You lost the round! ${scoreboard(roundResults[1], roundResults[2], userScore, computerScore)}`);
-        }
-    }
-    if (userScore === computerScore) {
-        alert("It's a tie!");
-    } else if (userScore > computerScore) {
-        alert("You won the match!");
-    } else {
-        alert("You lost the match!");
-    }
-}
-
-window.onload = game();
+const buttons = document.querySelectorAll(".button");
+buttons.forEach(button => button.addEventListener("click", e => playRound(e.target.id)));

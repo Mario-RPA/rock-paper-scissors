@@ -1,0 +1,66 @@
+.center-aligned {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buttons-container {
+    background: #1F2D38;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons {
+    height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    padding: 50px;
+}
+
+.button {
+    min-width: 200px;
+    padding: 20px;
+    border: 0;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+}
+
+.info-container {
+    background: #0F5085;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-container .result-message {
+
+}
+
+.results-container {
+    background: #0F5085;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.results-container div {
+    width: 100%;
+    flex: 1;
+}
+
+.results-container .computer-container {
+    background: #37381A;
+
+}
+.results-container .user-container {
+    background: #3D2928;
+}
